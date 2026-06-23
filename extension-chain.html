@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>拓展链 E-Chain — 关系重构：注重能力成长</title>
+<link rel="stylesheet" href="style.css">
+<style>
+.fig-block {
+  background: #fff;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 20px;
+  margin: 24px 0;
+  text-align: center;
+}
+.fig-block img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 6px;
+  display: block;
+  margin: 0 auto;
+}
+.fig-caption {
+  margin-top: 12px;
+  font-size: 13px;
+  color: var(--text-light);
+  font-weight: 500;
+}
+.fig-caption strong { color: var(--text); }
+
+.fig-pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin: 24px 0;
+}
+.fig-pair .fig-block { margin: 0; }
+
+.content-card {
+  background: #fff;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 28px 32px;
+  margin-bottom: 12px;
+}
+.content-card h3 {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 14px;
+  color: var(--e-chain);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.content-card h3::before {
+  content: '';
+  display: inline-block;
+  width: 4px;
+  height: 18px;
+  background: var(--e-chain);
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+.content-card p { font-size: 14.5px; line-height: 1.85; color: var(--text); margin-bottom: 10px; }
+.content-card p:last-child { margin-bottom: 0; }
+.content-card ul { list-style: none; margin-top: 6px; }
+.content-card ul li {
+  font-size: 14px;
+  line-height: 1.75;
+  padding: 5px 0 5px 18px;
+  position: relative;
+  color: var(--text);
+  border-bottom: 1px solid #f5f5f5;
+}
+.content-card ul li:last-child { border-bottom: none; }
+.content-card ul li::before {
+  content: '▶';
+  position: absolute;
+  left: 0;
+  font-size: 9px;
+  color: var(--e-chain);
+  top: 8px;
+}
+
+.sec-divider {
+  height: 3px;
+  background: linear-gradient(to right, var(--e-chain), transparent);
+  border-radius: 2px;
+  margin: 48px 0 36px;
+}
+
+/* Three-tier structure */
+.three-tiers {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin: 24px 0;
+}
+.tier-card {
+  background: #fff;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 24px 20px;
+  border-top: 4px solid var(--e-chain);
+  text-align: center;
+}
+.tier-num {
+  width: 44px; height: 44px; border-radius: 50%;
+  background: var(--e-chain);
+  color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px; font-weight: 800;
+  margin: 0 auto 14px;
+}
+.tier-title { font-weight: 700; font-size: 16px; margin-bottom: 8px; color: var(--e-chain); }
+.tier-sub { font-size: 13px; color: var(--text-light); line-height: 1.65; }
+
+/* Platform cards */
+.platform-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-bottom: 16px;
+}
+.platform-card {
+  background: #fff;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 22px;
+  border-left: 4px solid var(--e-chain);
+}
+.platform-card h4 { font-size: 15px; font-weight: 700; color: var(--e-chain); margin-bottom: 10px; }
+.platform-card p { font-size: 13px; color: var(--text-light); line-height: 1.65; }
+.platform-url {
+  font-size: 11px;
+  color: #888;
+  margin-top: 8px;
+  font-family: monospace;
+  background: #f5f5f5;
+  padding: 3px 6px;
+  border-radius: 4px;
+  display: inline-block;
+}
+
+/* Award table */
+.award-tbl-wrap {
+  background: #fff;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  margin: 20px 0;
+}
+.award-tbl-wrap table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+.award-tbl-wrap th {
+  background: var(--e-chain);
+  color: #fff;
+  padding: 10px 12px;
+  font-weight: 700;
+  text-align: left;
+  font-size: 13px;
+}
+.award-tbl-wrap td {
+  padding: 9px 12px;
+  border-top: 1px solid var(--border);
+  vertical-align: middle;
+}
+.award-tbl-wrap tr:hover { background: #f8f9ff; }
+.award-badge {
+  display: inline-block;
+  padding: 3px 9px;
+  border-radius: 10px;
+  font-size: 11px;
+  font-weight: 700;
+}
+.ab1 { background: #FFF8E1; color: #F57F17; }
+.ab2 { background: #E8EAF6; color: #3949AB; }
+.ab3 { background: #E8F5E9; color: #2E7D32; }
+
+/* CDIO Timeline */
+.cdio-wrap {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  background: #fff;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  margin: 20px 0;
+}
+.cdio-phase {
+  padding: 22px 16px;
+  border-right: 1px solid var(--border);
+  text-align: center;
+}
+.cdio-phase:last-child { border-right: none; }
+.cdio-icon { font-size: 32px; margin-bottom: 10px; }
+.cdio-name { font-weight: 800; font-size: 18px; color: var(--e-chain); margin-bottom: 4px; }
+.cdio-cn { font-size: 13px; color: var(--text-light); margin-bottom: 8px; }
+.cdio-sems {
+  font-size: 12px;
+  font-weight: 700;
+  color: #fff;
+  background: var(--e-chain);
+  border-radius: 12px;
+  padding: 3px 10px;
+  display: inline-block;
+  margin-bottom: 10px;
+}
+.cdio-desc { font-size: 12px; color: var(--text-light); line-height: 1.6; }
+
+/* Competition stats row */
+.comp-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin: 20px 0;
+}
+.comp-stat-card {
+  background: #fff;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 20px;
+  text-align: center;
+  border-top: 3px solid var(--e-chain);
+}
+.comp-stat-num { font-size: 32px; font-weight: 800; color: var(--e-chain); line-height: 1; margin-bottom: 4px; }
+.comp-stat-label { font-size: 12px; color: var(--text-light); }
+
+@media (max-width: 768px) {
+  .three-tiers, .platform-grid, .cdio-wrap { grid-template-columns: 1fr; }
+  .fig-pair { grid-template-columns: 1fr; }
+  .comp-stats { grid-template-columns: 1fr 1fr; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-brand" href="index.html">
+    <span class="logo">🏫</span>
+    三链合一·大数据专业建设成果
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html">首页</a></li>
+    <li><a href="knowledge-chain.html">📚 知识链</a></li>
+    <li><a href="extension-chain.html" class="nav-e">🔬 拓展链</a></li>
+    <li><a href="practice-chain.html">🏭 实践链</a></li>
+  </ul>
+</nav>
+
+<div class="hero e-hero">
+  <div class="hero-badge">E-CHAIN · 关系重构</div>
+  <h1>🔬 打通"拓展链"</h1>
+  <p class="subtitle">注重能力成长，建立可拓展学生大数据知识应用能力的第二课堂相关场景，三层递进培养</p>
+  <p class="hero-meta">三、关系重构：注重能力成长，打通"拓展链"</p>
+</div>
+
+<main>
+
+  <!-- Overview -->
+  <div class="content-card" style="margin-top:40px; border-left:4px solid var(--e-chain);">
+    <p>"拓展链"，即建立一系列可以拓展学生大数据知识应用能力的第二课堂相关场景。可划分为<strong>三个部分：基本操作实验、专项技能实践、综合能力实训</strong>。</p>
+    <p>第一部分主要通过搭建实验平台开展课内上机教学，巩固所学理论知识，培养基础实验技能；第二部分主要通过引入技能认证资源、开展认识实习，提高数据思维和专业技能；第三部分主要通过各类学科竞赛、创新项目等形式，培养创新意识和对专业技能的综合应用。</p>
+  </div>
+
+  <!-- Three-tier overview -->
+  <div class="three-tiers">
+    <div class="tier-card">
+      <div class="tier-num">一</div>
+      <div class="tier-title">基本操作实验</div>
+      <div class="tier-sub">搭建实验平台，开展课内上机教学，巩固理论知识，培养基础实验技能</div>
+    </div>
+    <div class="tier-card">
+      <div class="tier-num">二</div>
+      <div class="tier-title">专项技能实践</div>
+      <div class="tier-sub">引入技能认证资源、开展认识实习，提高数据思维和专业技能</div>
+    </div>
+    <div class="tier-card">
+      <div class="tier-num">三</div>
+      <div class="tier-title">综合能力实训</div>
+      <div class="tier-sub">通过各类学科竞赛、创新项目等形式，培养创新意识和综合应用能力</div>
+    </div>
+  </div>
+
+  <div class="sec-divider"></div>
+
+  <!-- Section 1: Platforms -->
+  <div class="section-header">
+    <div class="section-num e">1</div>
+    <div>
+      <div class="section-title">搭建两种大数据实验实训平台</div>
+      <div class="section-sub">技术先进、功能完备的大数据实验实训平台 · 覆盖所有已开设课程门类</div>
+    </div>
+  </div>
+
+  <div class="content-card">
+    <p>建设技术先进、功能完备的大数据实验实训平台是构建课程体系的必要支撑。按照功能集成、资源集优、服务集聚、管理集约的理念，建设覆盖主要行业领域的实训案例库，将教学视频、实训手册等教学资源导入平台，让学生实践完整的数据分析流程。</p>
+    <p>2021年与甲骨文大数据（中国区）唯一运营商——北京华育兴业科技有限公司达成合作，部署了硬件平台服务器+docker-server+8个96GB内存的docker节点，部署了3个软件平台。该平台中教学实训资源案例十分全面（例如《数据采集与清洗》课程对应的理论和实验资源多达<strong>109个</strong>），采用脱敏后真实的行业数据，全面覆盖已开设的课程门类。</p>
+  </div>
+
+  <div class="platform-grid">
+    <div class="platform-card">
+      <h4>🖥️ 大数据教学资源及实验管理平台</h4>
+      <p>教师统一管理教学资源，包括设置课程基本信息和教学大纲、编辑章节信息和考试题目、设置并使用实验环境</p>
+      <span class="platform-url">https://10.9.128.190:8088</span>
+    </div>
+    <div class="platform-card">
+      <h4>📊 大数据实训项目及数据资源系统</h4>
+      <p>学生可以体会真实的案例开发环境，实现理论与实践的无缝集成，全景记录教学及学习过程，通过"留痕"精准实现学情分析</p>
+      <span class="platform-url">https://10.9.128.190:50000</span>
+    </div>
+  </div>
+
+  <!-- Figure 8: 案例示例 -->
+  <div class="fig-block">
+    <img src="images/fig_p08_1.jpeg" alt="图8 大数据教学平台上的案例示例">
+    <div class="fig-caption"><strong>图8</strong> 大数据教学平台上的案例示例（数据清洗方向，理论+实验共64个资源）</div>
+  </div>
+
+  <!-- Figure 9: 教学平台 -->
+  <div class="fig-block">
+    <img src="images/fig_p09_1.jpeg" alt="图9 大数据教学平台">
+    <div class="fig-caption"><strong>图9</strong> 大数据教学资源及实验管理平台（核心课程界面）</div>
+  </div>
+
+  <!-- Figure 10 & 11 -->
+  <div class="fig-pair">
+    <div class="fig-block">
+      <img src="images/fig_p09_2.jpeg" alt="图10 大数据实训平台">
+      <div class="fig-caption"><strong>图10</strong> 大数据实训项目及数据资源系统</div>
+    </div>
+    <div class="fig-block">
+      <img src="images/fig_p09_3.jpeg" alt="图11 大数据教学平台操作视频">
+      <div class="fig-caption"><strong>图11</strong> 大数据教学平台操作视频（教师培训系列）</div>
+    </div>
+  </div>
+
+  <div class="sec-divider"></div>
+
+  <!-- Section 2: 1+X -->
+  <div class="section-header">
+    <div class="section-num e">2</div>
+    <div>
+      <div class="section-title">引入"1+X"技能认证资源，提升人才认证能力</div>
+      <div class="section-sub">CDA数据分析师证书 · 对标OBE成果导向目标 · 后续对接PMP等认证</div>
+    </div>
+  </div>
+
+  <div class="content-card">
+    <p>组织学生考取职业资格证书，提高就业竞争力。2023年12月，与广州就学在线科技有限公司达成合作协议，共同申报了"教育部产学合作协同育人项目"。利用CDA教育平台，指导学生有计划地参与和课程实践紧密联系的CDA专业技能认证。</p>
+    <p>CDA（Certified Data Analyst）数据分析师证书，是面向全球全行业的专业资格认证，已获得中国成人教育协会的认可，是诸多企业的人才评价标准，含金量较高。<strong>CDA考试三个等级的考试大纲与本专业课程设置高度契合。</strong></p>
+    <p>此外，后续将陆续对接<strong>PMP国际项目管理师认证</strong>、行业数据分析技术认证、大数据工程师等。</p>
+  </div>
+
+  <!-- Figure 12: CDA -->
+  <div class="fig-block">
+    <img src="images/fig_p10_1.jpeg" alt="图12 CDA考试等级相关内容与课程对标">
+    <div class="fig-caption"><strong>图12</strong> CDA考试等级相关内容与课程对标（LEVEL Ⅰ / Ⅱ / Ⅲ 三级认证体系）</div>
+  </div>
+
+  <div class="sec-divider"></div>
+
+  <!-- Section 3: Competitions -->
+  <div class="section-header">
+    <div class="section-num e">3</div>
+    <div>
+      <div class="section-title">以赛促学，有组织的开展"学赛融合"</div>
+      <div class="section-sub">蓝桥杯 · 全国大学生能源经济学术创意大赛 · 互联网+</div>
+    </div>
+  </div>
+
+  <div class="content-card">
+    <p>以"学赛融合"为指导，通过有组织的让学生参与"互联网+"、"蓝桥杯"等学科竞赛，实现技能提升。以赛促学已成为本专业能力培养的重要路径。</p>
+  </div>
+
+  <!-- Competition stats -->
+  <div class="comp-stats">
+    <div class="comp-stat-card">
+      <div class="comp-stat-num">101</div>
+      <div class="comp-stat-label">第十五届蓝桥杯<br>报名人数</div>
+    </div>
+    <div class="comp-stat-card">
+      <div class="comp-stat-num">55%+</div>
+      <div class="comp-stat-label">2022级大数据专业<br>参赛率</div>
+    </div>
+    <div class="comp-stat-card">
+      <div class="comp-stat-num">5</div>
+      <div class="comp-stat-label">第十届能源经济创意大赛<br>北京赛区获奖作品</div>
+    </div>
+  </div>
+
+  <!-- Lanqiao Competition -->
+  <div class="comp-card" style="background:#fff; border-radius:var(--radius); box-shadow:var(--shadow); padding:24px; margin-bottom:16px;">
+    <div class="comp-head" style="display:flex; align-items:center; gap:14px; margin-bottom:16px;">
+      <div style="width:50px;height:50px;border-radius:12px;background:var(--e-chain);color:#fff;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;">🏆</div>
+      <div>
+        <div style="font-weight:700;font-size:16px;">"蓝桥杯"全国软件和信息技术专业人才大赛</div>
+        <div style="font-size:13px;color:var(--text-light);">第十三届、第十四届、第十五届参赛情况</div>
+      </div>
+    </div>
+    <div class="award-tbl-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>届次</th><th>参赛人数</th><th>获奖情况</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>第十三届</td>
+            <td>38人</td>
+            <td>
+              <span class="award-badge ab2">全国二等奖 1项（Python A组）</span>&nbsp;
+              <span class="award-badge ab1">北京市一等奖 1项</span>&nbsp;
+              <span class="award-badge ab3">北京市三等奖 1项</span>&nbsp;
+              <span class="tag gray">杨洋老师获优秀组织个人奖</span>
+            </td>
+          </tr>
+          <tr>
+            <td>第十四届</td>
+            <td>57人</td>
+            <td>
+              <span class="award-badge ab2">北京市二等奖 2项（Python A组）</span>&nbsp;
+              <span class="award-badge ab3">北京市三等奖 2项（Python A组）</span>&nbsp;
+              <span class="award-badge ab3">北京市三等奖 1项（Java A组）</span>
+            </td>
+          </tr>
+          <tr>
+            <td>第十五届</td>
+            <td>101人报名，94人参赛</td>
+            <td>大数据专业63名同学参赛，2022级参赛率超过<strong>55%</strong></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Figure 13: 蓝桥杯现场 -->
+  <div class="fig-pair">
+    <div class="fig-block">
+      <img src="images/fig_p11_1.jpeg" alt="图13 蓝桥杯比赛现场（左）">
+      <div class="fig-caption"><strong>图13</strong> 蓝桥杯比赛现场</div>
+    </div>
+    <div class="fig-block">
+      <img src="images/fig_p11_2.jpeg" alt="图13 蓝桥杯比赛现场（右）">
+      <div class="fig-caption"><strong>图13</strong> 蓝桥杯比赛现场</div>
+    </div>
+  </div>
+
+  <!-- Energy Economics Competition -->
+  <div class="comp-card" style="background:#fff; border-radius:var(--radius); box-shadow:var(--shadow); padding:24px; margin-bottom:16px;">
+    <div class="comp-head" style="display:flex; align-items:center; gap:14px; margin-bottom:16px;">
+      <div style="width:50px;height:50px;border-radius:12px;background:#F57F17;color:#fff;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;">⚡</div>
+      <div>
+        <div style="font-weight:700;font-size:16px;">全国大学生能源经济学术创意大赛</div>
+        <div style="font-size:13px;color:var(--text-light);">2024年第十届 · 北京赛区 · 我系5份作品获奖</div>
+      </div>
+    </div>
+    <div class="award-tbl-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>作品标题</th><th>作者</th><th>组别</th><th>专业</th><th>获奖</th><th>指导老师</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Spatiotemporal characteristics of transmission regions in China's carbon emission networks: Evidence from 149 cities</td>
+            <td>朱睿希</td>
+            <td>大学生组</td>
+            <td>大数据管理与应用</td>
+            <td><span class="award-badge ab1">一等奖（冲击国赛）</span></td>
+            <td>冯翠洋</td>
+          </tr>
+          <tr>
+            <td>基于TCN-LSTM网络的风光气多能互补系统的节能减排预测</td>
+            <td>吴天韵</td>
+            <td>大学生组</td>
+            <td>大数据管理与应用</td>
+            <td><span class="award-badge ab3">三等奖</span></td>
+            <td>杨洋</td>
+          </tr>
+          <tr>
+            <td>储氢固碳——基于低成本碳捕集联产天然气系统的生态创新</td>
+            <td>谢文杰·覃雯·赵丹阳·王建博</td>
+            <td>大学生组</td>
+            <td>大数据管理与应用</td>
+            <td><span class="award-badge ab3">三等奖</span></td>
+            <td>赵学彬</td>
+          </tr>
+          <tr>
+            <td>数字经济、营商环境与城市商业活跃度——基于"智慧城市"的准自然实验</td>
+            <td>苏妍超·王子赫</td>
+            <td>研究生组</td>
+            <td>管理科学与工程</td>
+            <td><span class="award-badge ab2">二等奖</span></td>
+            <td>张永亮</td>
+          </tr>
+          <tr>
+            <td>基于储能视角的全球高镍锂电池产业链贸易网络供应风险传播机制研究</td>
+            <td>卫昭希·何金凝·王一帆·关梦珂</td>
+            <td>研究生组</td>
+            <td>管理科学与工程</td>
+            <td><span class="award-badge ab3">三等奖</span></td>
+            <td>黄辉</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Figure 14: 能源大赛现场 -->
+  <div class="fig-pair">
+    <div class="fig-block">
+      <img src="images/fig_p11_3.jpeg" alt="图14 全国能源经济学术创意大赛比赛现场（朱睿希同学）">
+      <div class="fig-caption"><strong>图14</strong> 全国能源经济学术创意大赛比赛现场（朱睿希同学）</div>
+    </div>
+    <div class="fig-block">
+      <img src="images/fig_p11_4.jpeg" alt="图14 全国能源经济学术创意大赛（李远老师担任评委）">
+      <div class="fig-caption"><strong>图14</strong> 全国能源经济学术创意大赛（我系李远老师担任评委）</div>
+    </div>
+  </div>
+
+  <!-- Figure 15: 获奖作品原始表格 -->
+  <div class="fig-block" style="margin-top: 24px;">
+    <img src="images/fig_p11_5.jpeg" alt="图15 第十届全国大学生能源经济学术创意大赛北京赛区获奖作品">
+    <div class="fig-caption"><strong>图15</strong> 第十届全国大学生能源经济学术创意大赛北京赛区获奖作品（原文）</div>
+  </div>
+
+  <div class="sec-divider"></div>
+
+  <!-- Section 4: CDIO Project -->
+  <div class="section-header">
+    <div class="section-num e">4</div>
+    <div>
+      <div class="section-title">采用"实景耦合式"的大创项目</div>
+      <div class="section-sub">基于CDIO理论 · 项目进度与知识传授进程同步 · 一体化项目训练</div>
+    </div>
+  </div>
+
+  <div class="content-card">
+    <p>"实景耦合式"，即以项目为依托，通过让学生<strong>跟踪项目全流程</strong>，从项目方案的设计到实际项目落地，通过实践让学生自主掌握并在项目中进行课程理论知识和项目实际操作之间的有效衔接，加强理论知识的实际运用，累积项目实践经验。</p>
+    <p>CDIO是一种国际广泛认可的工程教育模式，代表构思（Conceive）、设计（Design）、实现（Implement）和运作（Operate）。<strong>基于CDIO理论</strong>，我们将项目分模块耦合进课程中，保持项目进度与知识传授进程同步。</p>
+  </div>
+
+  <!-- CDIO Timeline -->
+  <div class="cdio-wrap">
+    <div class="cdio-phase">
+      <div class="cdio-icon">💡</div>
+      <div class="cdio-name">C</div>
+      <div class="cdio-cn">构思 Conceive</div>
+      <div class="cdio-sems">第3学期</div>
+      <div class="cdio-desc">进行分组、选题和模型设计，明确研究方向</div>
+    </div>
+    <div class="cdio-phase">
+      <div class="cdio-icon">📐</div>
+      <div class="cdio-name">D</div>
+      <div class="cdio-cn">设计 Design</div>
+      <div class="cdio-sems">第4—5学期</div>
+      <div class="cdio-desc">数据采集程序开发，设计数据处理方案</div>
+    </div>
+    <div class="cdio-phase">
+      <div class="cdio-icon">⚙️</div>
+      <div class="cdio-name">I</div>
+      <div class="cdio-cn">实现 Implement</div>
+      <div class="cdio-sems">第6—7学期</div>
+      <div class="cdio-desc">进行数据分析，完成对数据采集、加工和处理，面向问题建模和分析</div>
+    </div>
+    <div class="cdio-phase">
+      <div class="cdio-icon">🎓</div>
+      <div class="cdio-name">O</div>
+      <div class="cdio-cn">运作 Operate</div>
+      <div class="cdio-sems">第8学期</div>
+      <div class="cdio-desc">提交项目成果，形成毕业论文或者毕业设计</div>
+    </div>
+  </div>
+
+  <div class="content-card" style="margin-top: 16px;">
+    <p>通过<strong>一体化项目训练</strong>，激发学生的学习兴趣与积极性，培养学生的<strong>数据洞察力、逻辑思维能力和分析总结能力</strong>。以完整实施一个项目为目标，自学生大二进入专业后，结合大学生创新训练项目，贯穿整个大学学习周期，实现知识与实践的深度融合。</p>
+  </div>
+
+  <!-- Navigation -->
+  <div style="display:flex; justify-content:space-between; margin-top: 40px;">
+    <a href="knowledge-chain.html" style="text-decoration:none; padding:12px 24px; background:var(--k-chain); border-radius:8px; font-weight:600; color:#fff;">← 返回知识链</a>
+    <a href="practice-chain.html" style="text-decoration:none; padding:12px 24px; background:var(--p-chain); border-radius:8px; font-weight:600; color:#fff;">进入实践链 →</a>
+  </div>
+
+</main>
+
+<footer>
+  <strong>三链合一，立体重构</strong> · 拓展链 E-Chain<br>
+  国家战略新兴学科大数据专业的交叉融合型课程体系与OBE培养模式的创新实践<br>
+  中国矿业大学（北京）管理学院 · 2024年4月
+</footer>
+
+</body>
+</html>

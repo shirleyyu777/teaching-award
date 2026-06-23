@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>知识链 K-Chain — 内容重塑：重塑专业课程架构</title>
+<link rel="stylesheet" href="style.css">
+<style>
+/* Page-level figure styling */
+.fig-block {
+  background: #fff;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 20px;
+  margin: 24px 0;
+  text-align: center;
+}
+.fig-block img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 6px;
+  display: block;
+  margin: 0 auto;
+}
+.fig-caption {
+  margin-top: 12px;
+  font-size: 13px;
+  color: var(--text-light);
+  font-weight: 500;
+}
+.fig-caption strong { color: var(--text); }
+
+/* Two-column figure layout */
+.fig-pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin: 24px 0;
+}
+
+/* Content text blocks */
+.content-card {
+  background: #fff;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 28px 32px;
+  margin-bottom: 12px;
+}
+.content-card h3 {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 14px;
+  color: var(--k-chain);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.content-card h3::before {
+  content: '';
+  display: inline-block;
+  width: 4px;
+  height: 18px;
+  background: var(--k-chain);
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+.content-card p {
+  font-size: 14.5px;
+  line-height: 1.85;
+  color: var(--text);
+  margin-bottom: 10px;
+}
+.content-card p:last-child { margin-bottom: 0; }
+.content-card ul {
+  list-style: none;
+  margin-top: 6px;
+}
+.content-card ul li {
+  font-size: 14px;
+  line-height: 1.75;
+  padding: 5px 0 5px 18px;
+  position: relative;
+  color: var(--text);
+  border-bottom: 1px solid #f5f5f5;
+}
+.content-card ul li:last-child { border-bottom: none; }
+.content-card ul li::before {
+  content: '▶';
+  position: absolute;
+  left: 0;
+  font-size: 9px;
+  color: var(--k-chain);
+  top: 8px;
+}
+
+/* Section divider */
+.sec-divider {
+  height: 3px;
+  background: linear-gradient(to right, var(--k-chain), transparent);
+  border-radius: 2px;
+  margin: 48px 0 36px;
+}
+
+/* OBE Flow */
+.obe-flow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  flex-wrap: wrap;
+  background: #fff;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 28px 24px;
+  margin: 20px 0;
+}
+.obe-step {
+  text-align: center;
+  flex-shrink: 0;
+}
+.obe-box {
+  background: var(--k-chain);
+  color: #fff;
+  padding: 14px 18px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 700;
+  min-width: 110px;
+  line-height: 1.4;
+}
+.obe-box.light { background: #e8f5e9; color: var(--k-chain); border: 2px solid var(--k-chain); }
+.obe-arrow { font-size: 26px; color: #aaa; padding: 0 10px; }
+.obe-step small { display: block; font-size: 11px; color: var(--text-light); margin-top: 6px; }
+
+/* Knowledge pipeline */
+.kpipe {
+  background: #fff;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 24px;
+  overflow-x: auto;
+  margin: 20px 0;
+}
+.kpipe-inner { display: flex; align-items: center; gap: 0; min-width: max-content; }
+.kpipe-step { display: flex; align-items: center; }
+.kpipe-node {
+  padding: 11px 14px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #fff;
+  text-align: center;
+  min-width: 92px;
+  line-height: 1.35;
+}
+.kpipe-arrow { font-size: 18px; color: #bbb; padding: 0 8px; }
+
+/* 12345 */
+.fw-title-badge {
+  display: inline-block;
+  padding: 3px 12px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 700;
+  background: var(--k-chain);
+  color: #fff;
+  margin-right: 8px;
+}
+
+@media (max-width: 768px) {
+  .fig-pair { grid-template-columns: 1fr; }
+  .obe-flow { flex-direction: column; gap: 8px; }
+  .obe-arrow { transform: rotate(90deg); }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-brand" href="index.html">
+    <span class="logo">🏫</span>
+    三链合一·大数据专业建设成果
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html">首页</a></li>
+    <li><a href="knowledge-chain.html" class="nav-k">📚 知识链</a></li>
+    <li><a href="extension-chain.html">🔬 拓展链</a></li>
+    <li><a href="practice-chain.html">🏭 实践链</a></li>
+  </ul>
+</nav>
+
+<div class="hero k-hero">
+  <div class="hero-badge">K-CHAIN · 内容重塑</div>
+  <h1>📚 打通"知识链"</h1>
+  <p class="subtitle">重塑专业课程架构，将一系列知识元组织成动态调整、相互链接、相互渗透、整体增益的知识体系</p>
+  <p class="hero-meta">二、内容重塑：重塑专业课程架构，打通"知识链"</p>
+</div>
+
+<main>
+
+  <!-- Overview -->
+  <div class="content-card" style="margin-top:40px; border-left: 4px solid var(--k-chain);">
+    <p>打通"知识链（K-Chain）"，即将一系列知识元组织成<strong>动态调整、相互链接、相互渗透、相互传播、整体增益</strong>的过程。新文科的"新"强调新的思维模式与学科交叉融合的协同建设，促进学生的计算思维、管理思维、跨学科思维和关联思维的培养。</p>
+    <p>经过探索与实践，本专业课程架构设计形成了覆盖大数据处理全流程的知识脉络、模块化跨领域的课程体系、"OBE逆向设计"的培养方案、递进分布的学期安排，构建了以知识点为信号、以课程为节点、以学期为单元，"产学研"多元主体之间构成相互映射有效衔接的教学网络。</p>
+  </div>
+
+  <!-- Section 1: OBE -->
+  <div class="section-header" style="margin-top: 40px;">
+    <div class="section-num k">1</div>
+    <div>
+      <div class="section-title">OBE成果导向，逆向设计培养方案</div>
+      <div class="section-sub">Outcome-based Education · 以岗位人才需求为起点，逆向推导课程体系</div>
+    </div>
+  </div>
+
+  <div class="content-card">
+    <p>OBE（Outcome-based Education）模式，即<strong>成果导向教育</strong>，基于明确的结果和预期的产出，逆向进行课程设计。培养方案设计的起点是岗位人才需求，由此制定了由产业岗位需求倒推专业建设的方案与机制。</p>
+    <p>具体而言，将相关职位如数据科学家、数据架构师、大数据开发工程师、数据产品经理和数据库工程师等数据分析类职位需求与该专业毕业生能力培养进行匹配，进而根据岗位需求梳理技能体系，建立<strong>数字技术人才能力图谱</strong>（图1），再由此推导出课程体系，从而完成培养方案设计。</p>
+    <p>全新设计了<strong>24门大数据专业课程</strong>，明确各门课程甚至每课程中具体模块对实现最终目标的贡献。此部分工作主要在2021年6月—12月之间陆续完成。</p>
+  </div>
+
+  <!-- OBE Flow -->
+  <div class="obe-flow">
+    <div class="obe-step">
+      <div class="obe-box light">产业岗位需求</div>
+      <small>数据科学家/架构师/工程师</small>
+    </div>
+    <span class="obe-arrow">→</span>
+    <div class="obe-step">
+      <div class="obe-box">数字技术人才<br>能力图谱</div>
+      <small>图1 技能体系梳理</small>
+    </div>
+    <span class="obe-arrow">→</span>
+    <div class="obe-step">
+      <div class="obe-box">课程体系<br>设计</div>
+      <small>24门专业课程</small>
+    </div>
+    <span class="obe-arrow">→</span>
+    <div class="obe-step">
+      <div class="obe-box">培养方案<br>制定</div>
+      <small>OBE逆向设计</small>
+    </div>
+    <span class="obe-arrow">→</span>
+    <div class="obe-step">
+      <div class="obe-box light">课程大纲<br>编写</div>
+      <small>模块贡献明确</small>
+    </div>
+  </div>
+
+  <!-- Figure 1 -->
+  <div class="fig-block">
+    <img src="images/fig_p04_1.jpeg" alt="图1 数字技术人才能力图谱">
+    <div class="fig-caption"><strong>图1</strong> 数字技术人才能力图谱（OT·CT·IT·DT·AI 五大技术领域）</div>
+  </div>
+
+  <div class="sec-divider"></div>
+
+  <!-- Section 2: Knowledge Pipeline -->
+  <div class="section-header">
+    <div class="section-num k">2</div>
+    <div>
+      <div class="section-title">重塑知识脉络，有序链接，纵向深化，全面覆盖</div>
+      <div class="section-sub">大数据处理全流程知识点覆盖 · 有组织说课 · 主干课程牵头</div>
+    </div>
+  </div>
+
+  <div class="content-card">
+    <h3>实现大数据处理流程知识点全覆盖</h3>
+    <p>以"大数据认识→大数据基础→大数据采集→大数据存储→大数据平台→大数据处理分析→大数据挖掘→大数据展示→典型行业应用融合→大数据综合项目实战"为主线，课程内容按学期与学年逐步递进。</p>
+  </div>
+
+  <!-- Pipeline -->
+  <div class="kpipe">
+    <div class="kpipe-inner">
+      <div class="kpipe-step"><div class="kpipe-node" style="background:#1B5E20;">大数据<br>认识</div><span class="kpipe-arrow">→</span></div>
+      <div class="kpipe-step"><div class="kpipe-node" style="background:#2E7D32;">大数据<br>基础</div><span class="kpipe-arrow">→</span></div>
+      <div class="kpipe-step"><div class="kpipe-node" style="background:#388E3C;">大数据<br>采集</div><span class="kpipe-arrow">→</span></div>
+      <div class="kpipe-step"><div class="kpipe-node" style="background:#43A047;">大数据<br>存储</div><span class="kpipe-arrow">→</span></div>
+      <div class="kpipe-step"><div class="kpipe-node" style="background:#4CAF50;">大数据<br>平台</div><span class="kpipe-arrow">→</span></div>
+      <div class="kpipe-step"><div class="kpipe-node" style="background:#1565C0;">大数据处理<br>分析</div><span class="kpipe-arrow">→</span></div>
+      <div class="kpipe-step"><div class="kpipe-node" style="background:#0D47A1;">大数据<br>挖掘</div><span class="kpipe-arrow">→</span></div>
+      <div class="kpipe-step"><div class="kpipe-node" style="background:#7B1FA2;">大数据<br>展示</div><span class="kpipe-arrow">→</span></div>
+      <div class="kpipe-step"><div class="kpipe-node" style="background:#6A1B9A;">行业应用<br>融合</div><span class="kpipe-arrow">→</span></div>
+      <div class="kpipe-step"><div class="kpipe-node" style="background:#8B1A1A;">综合项目<br>实战</div></div>
+    </div>
+  </div>
+
+  <div class="content-card">
+    <h3>有组织性的开展说课活动</h3>
+    <p>定期组织不同教师分享课程内容安排，同系老师均参与聆听，统一协调统筹规划课程知识点在不同课程之间的分布情况和难易程度，串联所有课程中的技术与方法，做到不同课程重点突出又有序链接。</p>
+    <h3 style="margin-top:16px;">不同方向均有主干课程牵头</h3>
+    <ul>
+      <li>以<strong>金融学</strong>为核心，形成证券投资大数据分析、碳资产管理与碳金融、价值投资工具与策略组成的金融方向模块</li>
+      <li>以<strong>微观和宏观经济学</strong>为核心，衔接应用统计学、大数据计量经济分析、能源经济与管理、数字经济管理等课程</li>
+      <li>以<strong>Java语言程序设计</strong>为核心，衔接系统建模与仿真</li>
+      <li>以<strong>大数据技术基础</strong>为核心，衔接人工智能与机器学习、量化交易理论等</li>
+    </ul>
+    <p style="margin-top:12px;">由此形成了无单一孤立课程、不同课程之间均有衔接的<strong>课程网络</strong>。</p>
+  </div>
+
+  <!-- Figure 2 -->
+  <div class="fig-block">
+    <img src="images/fig_p05_1.jpeg" alt="图2 覆盖大数据处理与分析全流程的知识架构">
+    <div class="fig-caption"><strong>图2</strong> 覆盖大数据处理与分析全流程的知识架构</div>
+  </div>
+
+  <div class="sec-divider"></div>
+
+  <!-- Section 3: 12345 -->
+  <div class="section-header">
+    <div class="section-num k">3</div>
+    <div>
+      <div class="section-title">重塑每门课程，制定"12345"调整方向</div>
+      <div class="section-sub">以培养数据素养为核心 · 四合举措 · 五化转变</div>
+    </div>
+  </div>
+
+  <div class="content-card">
+    <p>"12345"调整方向，是指：</p>
+    <ul>
+      <li><span class="fw-title-badge">1</span>以培养<strong>数据素养</strong>为<strong>一个核心</strong></li>
+      <li><span class="fw-title-badge">2</span>理论学时与上机学时<strong>两方面并重</strong></li>
+      <li><span class="fw-title-badge">3</span>涵盖专业知识链+拓展能力链+实践创新链<strong>"三链"目标</strong></li>
+      <li><span class="fw-title-badge">4</span>实施"整合教学内容+融合教学模式+结合教学育人+混合教学形态"的<strong>"四合"举措</strong></li>
+      <li><span class="fw-title-badge">5</span>教学实施方面进行"教学手段信息化+课程内容体系化+方式方法体验化+重点难点规律化+考评反馈一体化"的<strong>"五化"转变</strong></li>
+    </ul>
+  </div>
+
+  <!-- Figure 3: 教学手段信息化 -->
+  <div class="fig-block">
+    <img src="images/fig_p05_2.jpeg" alt='图3 "五化"之"教学手段信息化"'>
+    <div class="fig-caption"><strong>图3</strong> "五化"之"教学手段信息化"——信息化手段可以把枯燥的传统教学转变为形象生动的互动式教学</div>
+  </div>
+
+  <!-- Figure 4: 课程内容体系化 -->
+  <div class="fig-block">
+    <img src="images/fig_p06_1.jpeg" alt='图4 "五化"之"课程内容体系化"'>
+    <div class="fig-caption"><strong>图4</strong> "五化"之"课程内容体系化"——在这个碎片化信息充斥的时代，只有整合的系统的信息才是知识</div>
+  </div>
+
+  <div class="sec-divider"></div>
+
+  <!-- Section 4: Course System -->
+  <div class="section-header">
+    <div class="section-num k">4</div>
+    <div>
+      <div class="section-title">重塑课程体系，模块化跨领域，学期递进分布</div>
+      <div class="section-sub">通识教育+专业教育+实践教育+创新创业教育 四层次结构</div>
+    </div>
+  </div>
+
+  <div class="content-card">
+    <h3>模块化结构</h3>
+    <p>在通识教育、创新创业教育和专业教育三个层次结构的基础上，进一步梳理出"学科基础类课程"、"专业必修类课程"、"专业课程组"、"实践教育-专业类课程""专业任选类课程"等类别。</p>
+    <h3 style="margin-top:16px;">学期安排上递进式分布</h3>
+    <p>例如，学生在第三学期集中学习"学科基础类"课程，第四学期和第五学期则集中学习"专业必修类"课程，课程内容按学期与学年逐级递进。</p>
+  </div>
+
+  <!-- Figure 5: 模块化课程体系 -->
+  <div class="fig-block">
+    <img src="images/fig_p06_2.jpeg" alt="图5 模块化跨领域的课程体系">
+    <div class="fig-caption"><strong>图5</strong> 模块化跨领域的课程体系</div>
+  </div>
+
+  <!-- Figure 6: 培养方案调整计划 -->
+  <div class="fig-block">
+    <img src="images/fig_p07_1.jpeg" alt="图6 新版培养方案调整计划">
+    <div class="fig-caption"><strong>图6</strong> 新版培养方案调整计划（按学期递进的课程分布树状图，学分·学时·理论+实验）</div>
+  </div>
+
+  <!-- Figure 7: 三维交叉课程 -->
+  <div class="fig-block">
+    <img src="images/fig_p07_2.jpeg" alt="图7 课程体系中的三维交叉代表性课程">
+    <div class="fig-caption"><strong>图7</strong> 课程体系中的三维交叉代表性课程（大数据专业类 × 计算机基础类 × 经济管理类）</div>
+  </div>
+
+  <!-- Summary -->
+  <div class="content-card" style="border-left: 4px solid var(--k-chain); margin-top: 24px;">
+    <h3>知识链建设总结</h3>
+    <p>通过对课程架构横向与纵向多层次的立体重塑，形成了：</p>
+    <ul>
+      <li>覆盖大数据处理全流程的知识脉络</li>
+      <li>模块化跨领域的课程体系</li>
+      <li>"OBE逆向设计"的培养方案</li>
+      <li>递进分布的学期安排</li>
+    </ul>
+    <p style="margin-top:12px;">从而使学生达到"硬性技术+柔性知识+跨界融合知识"三维技能素养有效耦合，"大数据思维+计算机思维+经济管理思维"三种思想范式有机结合的效果。</p>
+  </div>
+
+  <!-- Navigation -->
+  <div style="display:flex; justify-content:space-between; margin-top: 40px;">
+    <a href="index.html" style="text-decoration:none; padding:12px 24px; background:#f5f5f5; border-radius:8px; font-weight:600; color:var(--text);">← 返回首页</a>
+    <a href="extension-chain.html" style="text-decoration:none; padding:12px 24px; background:var(--e-chain); border-radius:8px; font-weight:600; color:#fff;">进入拓展链 →</a>
+  </div>
+
+</main>
+
+<footer>
+  <strong>三链合一，立体重构</strong> · 知识链 K-Chain<br>
+  国家战略新兴学科大数据专业的交叉融合型课程体系与OBE培养模式的创新实践<br>
+  中国矿业大学（北京）管理学院 · 2024年4月
+</footer>
+
+</body>
+</html>

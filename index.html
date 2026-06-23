@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>三链合一，立体重构 — 大数据专业建设成果</title>
+<link rel="stylesheet" href="style.css">
+<style>
+.hero-index {
+  background: linear-gradient(150deg, #6b0d0d 0%, #8B1A1A 45%, #a83232 100%);
+  color: #fff;
+  padding: 100px 48px 90px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero-index::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: url("data:image/svg+xml,%3Csvg width='60' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='30' cy='30' r='1.5' fill='rgba(255,255,255,0.06)'/%3E%3C/svg%3E");
+}
+.hero-index .content { position: relative; z-index: 1; }
+.hero-index h1 { font-size: 44px; font-weight: 800; margin-bottom: 12px; line-height: 1.25; }
+.hero-index .sub { font-size: 18px; opacity: 0.88; max-width: 700px; margin: 0 auto 20px; }
+.hero-index .meta-line { font-size: 14px; opacity: 0.7; letter-spacing: 1px; margin-top: 8px; }
+.award-badge-hero {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.35);
+  padding: 8px 20px;
+  border-radius: 24px;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 28px;
+  letter-spacing: 1px;
+}
+.award-badge-hero .dot { width: 8px; height: 8px; border-radius: 50%; background: #ffd700; }
+
+.overview-section {
+  background: #fff;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 36px 40px;
+  margin-bottom: 48px;
+}
+.overview-section p {
+  font-size: 15px;
+  line-height: 1.85;
+  color: var(--text);
+  margin-bottom: 12px;
+}
+.overview-section p:last-child { margin-bottom: 0; }
+
+.three-chains-title {
+  text-align: center;
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--text);
+  margin-bottom: 8px;
+}
+.three-chains-sub {
+  text-align: center;
+  font-size: 15px;
+  color: var(--text-light);
+  margin-bottom: 36px;
+}
+
+.chain-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-bottom: 56px;
+}
+
+.chain-card-big {
+  background: #fff;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  text-decoration: none;
+  color: var(--text);
+  transition: var(--transition);
+  display: flex;
+  flex-direction: column;
+}
+.chain-card-big:hover { box-shadow: var(--shadow-hover); transform: translateY(-5px); }
+
+.chain-card-top {
+  padding: 30px 28px 22px;
+  text-align: center;
+}
+.chain-card-top .chain-circle {
+  width: 72px; height: 72px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 32px; margin: 0 auto 16px;
+}
+.chain-card-top h2 { font-size: 20px; font-weight: 800; margin-bottom: 6px; }
+.chain-card-top .chain-en-label { font-size: 12px; letter-spacing: 2px; opacity: 0.65; }
+.chain-card-top .chain-desc { font-size: 14px; color: var(--text-light); line-height: 1.7; margin-top: 10px; }
+
+.chain-card-bottom {
+  padding: 16px 28px 22px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.chain-card-footer {
+  padding: 0 28px 24px;
+}
+.chain-goto {
+  display: block;
+  text-align: center;
+  padding: 11px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #fff;
+  text-decoration: none;
+  transition: var(--transition);
+}
+.chain-goto:hover { opacity: 0.88; }
+.chain-goto.k { background: var(--k-chain); }
+.chain-goto.e { background: var(--e-chain); }
+.chain-goto.p { background: var(--p-chain); }
+
+.k-top { background: linear-gradient(135deg, #e8f5e9, #f1f8f1); }
+.e-top { background: linear-gradient(135deg, #e3f2fd, #eef4ff); }
+.p-top { background: linear-gradient(135deg, #f3e5f5, #f8f0ff); }
+
+.chain-circle.k { background: #e8f5e9; }
+.chain-circle.e { background: #e3f2fd; }
+.chain-circle.p { background: #f3e5f5; }
+
+/* Stats */
+.stats-section { margin-bottom: 56px; }
+.stats-section h2 { text-align: center; font-size: 24px; font-weight: 700; margin-bottom: 24px; }
+.stats-grid-5 {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 16px;
+}
+.stat-box {
+  background: #fff;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 24px 16px;
+  text-align: center;
+  border-bottom: 3px solid var(--primary);
+}
+.stat-big { font-size: 36px; font-weight: 800; line-height: 1; margin-bottom: 6px; }
+.stat-label { font-size: 12px; color: var(--text-light); line-height: 1.4; }
+
+/* Team */
+.team-section {
+  background: #fff;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 32px 36px;
+}
+.team-section h2 { font-size: 20px; font-weight: 700; margin-bottom: 20px; }
+.team-members { display: flex; flex-wrap: wrap; gap: 8px; }
+.team-member {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  background: #f8f9fb;
+  border-radius: 20px;
+  font-size: 14px;
+  color: var(--text);
+}
+.team-member.lead {
+  background: #fff5f5;
+  border: 1px solid #fbd0d0;
+  font-weight: 700;
+  color: var(--primary);
+}
+.team-unit { font-size: 13px; color: var(--text-light); margin-top: 14px; }
+
+/* Three-path diagram */
+.path-diagram {
+  background: #fff;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 32px;
+  margin-bottom: 48px;
+  text-align: center;
+}
+.path-diagram h2 { font-size: 22px; font-weight: 700; margin-bottom: 8px; }
+.path-diagram p { font-size: 14px; color: var(--text-light); margin-bottom: 28px; }
+.path-boxes {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  flex-wrap: wrap;
+}
+.path-box {
+  padding: 18px 24px;
+  border-radius: 10px;
+  color: #fff;
+  font-weight: 700;
+  font-size: 15px;
+  text-align: center;
+  min-width: 120px;
+}
+.path-box small { display: block; font-size: 12px; font-weight: 400; opacity: 0.85; margin-top: 4px; }
+.pb1 { background: var(--primary); }
+.pb2 { background: #555; }
+.pb3 { background: var(--k-chain); }
+.pb4 { background: var(--e-chain); }
+.pb5 { background: var(--p-chain); }
+.path-arrow { font-size: 24px; color: #bbb; padding: 0 12px; }
+
+@media (max-width: 900px) {
+  .chain-cards-grid { grid-template-columns: 1fr; }
+  .stats-grid-5 { grid-template-columns: repeat(2, 1fr); }
+  .hero-index h1 { font-size: 28px; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-brand" href="index.html">
+    <span class="logo">🏫</span>
+    三链合一·大数据专业建设成果
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html">首页</a></li>
+    <li><a href="knowledge-chain.html" class="nav-k">📚 知识链</a></li>
+    <li><a href="extension-chain.html" class="nav-e">🔬 拓展链</a></li>
+    <li><a href="practice-chain.html" class="nav-p">🏭 实践链</a></li>
+  </ul>
+</nav>
+
+<div class="hero-index">
+  <div class="content">
+    <div class="award-badge-hero"><span class="dot"></span>2024年校级教学成果一等奖</div>
+    <h1>三链合一，立体重构</h1>
+    <p class="sub">国家战略新兴学科大数据专业的交叉融合型课程体系<br>与OBE培养模式的创新实践</p>
+    <p class="meta-line">中国矿业大学（北京）管理学院 · 大数据管理与应用专业 · 2024年4月</p>
+  </div>
+</div>
+
+<main>
+
+  <!-- Overview -->
+  <div class="overview-section" style="margin-top: 40px;">
+    <p>大数据管理与应用专业（代码120108T）是推进"新文科"建设的重要战略部署。管理学院依托教育部"新文科研究与改革实践项目"，于2021年新开设了此专业，经历了从无到有、全方位的创新。</p>
+    <p>本成果以<strong>认知（理念）、重塑（内容）、协同（方法）</strong>为抓手，以<strong>打通"知识链—拓展链—实践链"</strong>为目标，以<strong>"三链合一，立体重构"</strong>为整体思路，实施了"认知重启—内容重塑—关系重构"专业建设路径，实现了在有限资源约束下建设效率最大化。</p>
+    <p>专业培养目标：致力于培养具备"家国情怀、精英素养、能源特质"，"懂数据、懂能源、能管理、能决策"的复合型、应用型、创新型人才。根据软科世界大学学术排名，我院大数据管理与应用专业<strong>全国排名第22，评级B+</strong>；正高职教师数量<strong>全国排名第七</strong>。</p>
+  </div>
+
+  <!-- Three-path building path -->
+  <div class="path-diagram">
+    <h2>专业建设总体路径</h2>
+    <p>以"三链合一"为核心，构建立体化专业建设体系</p>
+    <div class="path-boxes">
+      <div class="path-box pb1">认知重启<small>理念先行</small></div>
+      <span class="path-arrow">→</span>
+      <div class="path-box pb2">内容重塑<small>课程架构</small></div>
+      <span class="path-arrow">→</span>
+      <div class="path-box pb3">知识链<small>K-Chain</small></div>
+      <span class="path-arrow">+</span>
+      <div class="path-box pb4">拓展链<small>E-Chain</small></div>
+      <span class="path-arrow">+</span>
+      <div class="path-box pb5">实践链<small>P-Chain</small></div>
+      <span class="path-arrow">→</span>
+      <div class="path-box" style="background:#c0392b;">三链合一<small>立体重构</small></div>
+    </div>
+  </div>
+
+  <!-- Three Chains -->
+  <h2 class="three-chains-title">三链核心内容</h2>
+  <p class="three-chains-sub">点击卡片进入各链详细页面，查看完整图文内容</p>
+
+  <div class="chain-cards-grid">
+    <!-- K-Chain -->
+    <a class="chain-card-big" href="knowledge-chain.html">
+      <div class="chain-card-top k-top">
+        <div class="chain-circle k">📚</div>
+        <h2 style="color:#2E7D32;">知识链</h2>
+        <div class="chain-en-label">K-CHAIN · 内容重塑</div>
+        <p class="chain-desc">重塑专业课程架构，将一系列知识元组织成动态调整、相互链接、整体增益的课程网络体系</p>
+      </div>
+      <div class="chain-card-bottom">
+        <span class="tag k">OBE逆向设计</span>
+        <span class="tag k">数字技术能力图谱</span>
+        <span class="tag k">知识脉络全覆盖</span>
+        <span class="tag k">12345调整方向</span>
+        <span class="tag k">模块化课程体系</span>
+        <span class="tag k">学期递进分布</span>
+      </div>
+      <div class="chain-card-footer">
+        <span class="chain-goto k">进入知识链 →</span>
+      </div>
+    </a>
+
+    <!-- E-Chain -->
+    <a class="chain-card-big" href="extension-chain.html">
+      <div class="chain-card-top e-top">
+        <div class="chain-circle e">🔬</div>
+        <h2 style="color:#1565C0;">拓展链</h2>
+        <div class="chain-en-label">E-CHAIN · 关系重构</div>
+        <p class="chain-desc">注重能力成长，建立可拓展学生大数据知识应用能力的第二课堂相关场景，分三层递进培养</p>
+      </div>
+      <div class="chain-card-bottom">
+        <span class="tag e">大数据实验实训平台</span>
+        <span class="tag e">1+X技能认证</span>
+        <span class="tag e">学赛融合</span>
+        <span class="tag e">实景耦合大创</span>
+        <span class="tag e">CDA认证</span>
+        <span class="tag e">蓝桥杯竞赛</span>
+      </div>
+      <div class="chain-card-footer">
+        <span class="chain-goto e">进入拓展链 →</span>
+      </div>
+    </a>
+
+    <!-- P-Chain -->
+    <a class="chain-card-big" href="practice-chain.html">
+      <div class="chain-card-top p-top">
+        <div class="chain-circle p">🏭</div>
+        <h2 style="color:#7B1FA2;">实践链</h2>
+        <div class="chain-en-label">P-CHAIN · 关系重构</div>
+        <p class="chain-desc">联合科技矿场，产学协同育人，整合教学、培训、科研和产业实践资源，强化实践教育</p>
+      </div>
+      <div class="chain-card-bottom">
+        <span class="tag p">产学协同育人</span>
+        <span class="tag p">校企合作机制</span>
+        <span class="tag p">联合培养方案</span>
+        <span class="tag p">校企联合评价</span>
+        <span class="tag p">华育兴业合作</span>
+        <span class="tag p">拓尔思合作</span>
+      </div>
+      <div class="chain-card-footer">
+        <span class="chain-goto p">进入实践链 →</span>
+      </div>
+    </a>
+  </div>
+
+  <!-- Key Stats -->
+  <div class="stats-section">
+    <h2>主要成果数据</h2>
+    <div class="stats-grid-5">
+      <div class="stat-box">
+        <div class="stat-big" style="color:var(--primary);">24</div>
+        <div class="stat-label">大数据专业课程<br>全新设计</div>
+      </div>
+      <div class="stat-box" style="border-color:var(--k-chain);">
+        <div class="stat-big" style="color:var(--k-chain);">13</div>
+        <div class="stat-label">教改项目<br>（含4项省部级）</div>
+      </div>
+      <div class="stat-box" style="border-color:var(--e-chain);">
+        <div class="stat-big" style="color:var(--e-chain);">101</div>
+        <div class="stat-label">蓝桥杯第十五届<br>参赛人数</div>
+      </div>
+      <div class="stat-box" style="border-color:var(--p-chain);">
+        <div class="stat-big" style="color:var(--p-chain);">B+</div>
+        <div class="stat-label">软科中国大学<br>专业排名评级</div>
+      </div>
+      <div class="stat-box" style="border-color:#F57F17;">
+        <div class="stat-big" style="color:#F57F17;">22</div>
+        <div class="stat-label">全国专业排名<br>（软科2022）</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Team -->
+  <div class="team-section">
+    <h2>成果完成团队</h2>
+    <div class="team-members">
+      <span class="team-member lead">👨‍🏫 张永亮</span>
+      <span class="team-member">杨洋</span>
+      <span class="team-member">黄辉</span>
+      <span class="team-member">李远</span>
+      <span class="team-member">刘海滨</span>
+      <span class="team-member">汪莹</span>
+      <span class="team-member">杨跃翔</span>
+      <span class="team-member">赵志明</span>
+      <span class="team-member">李岩</span>
+      <span class="team-member">张志强</span>
+      <span class="team-member">王晓川</span>
+      <span class="team-member">陈秀兰</span>
+      <span class="team-member">高俊莲</span>
+      <span class="team-member">荣立松</span>
+      <span class="team-member">苗建国</span>
+      <span class="team-member">王重凯</span>
+      <span class="team-member">王冬梅</span>
+    </div>
+    <p class="team-unit">成果完成单位：<strong>中国矿业大学（北京）管理学院</strong></p>
+  </div>
+
+</main>
+
+<footer>
+  <strong>三链合一，立体重构</strong><br>
+  国家战略新兴学科大数据专业的交叉融合型课程体系与OBE培养模式的创新实践<br>
+  中国矿业大学（北京）管理学院 · 2024年4月
+</footer>
+
+</body>
+</html>

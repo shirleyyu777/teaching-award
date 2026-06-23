@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>实践链 P-Chain — 关系重构：联合科技矿场</title>
+<link rel="stylesheet" href="style.css">
+<style>
+.fig-block {
+  background: #fff;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 20px;
+  margin: 24px 0;
+  text-align: center;
+}
+.fig-block img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 6px;
+  display: block;
+  margin: 0 auto;
+}
+.fig-caption {
+  margin-top: 12px;
+  font-size: 13px;
+  color: var(--text-light);
+  font-weight: 500;
+}
+.fig-caption strong { color: var(--text); }
+
+.fig-pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin: 24px 0;
+}
+.fig-pair .fig-block { margin: 0; }
+
+.content-card {
+  background: #fff;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 28px 32px;
+  margin-bottom: 12px;
+}
+.content-card h3 {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 14px;
+  color: var(--p-chain);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.content-card h3::before {
+  content: '';
+  display: inline-block;
+  width: 4px;
+  height: 18px;
+  background: var(--p-chain);
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+.content-card p { font-size: 14.5px; line-height: 1.85; color: var(--text); margin-bottom: 10px; }
+.content-card p:last-child { margin-bottom: 0; }
+.content-card ul { list-style: none; margin-top: 6px; }
+.content-card ul li {
+  font-size: 14px;
+  line-height: 1.75;
+  padding: 5px 0 5px 18px;
+  position: relative;
+  color: var(--text);
+  border-bottom: 1px solid #f5f5f5;
+}
+.content-card ul li:last-child { border-bottom: none; }
+.content-card ul li::before {
+  content: '▶';
+  position: absolute;
+  left: 0;
+  font-size: 9px;
+  color: var(--p-chain);
+  top: 8px;
+}
+
+.sec-divider {
+  height: 3px;
+  background: linear-gradient(to right, var(--p-chain), transparent);
+  border-radius: 2px;
+  margin: 48px 0 36px;
+}
+
+/* Three Steps */
+.three-steps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin: 28px 0;
+}
+.step-card-p {
+  background: #fff;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 24px 20px;
+  position: relative;
+  margin-top: 22px;
+}
+.step-badge-p {
+  position: absolute;
+  top: -18px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  background: var(--p-chain);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  font-weight: 800;
+  box-shadow: 0 4px 12px rgba(123,31,162,0.3);
+}
+.step-card-p h3 {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--p-chain);
+  margin-bottom: 12px;
+  text-align: center;
+}
+.step-card-p ul { list-style: none; }
+.step-card-p ul li {
+  font-size: 13px;
+  color: var(--text-light);
+  padding: 4px 0 4px 14px;
+  position: relative;
+}
+.step-card-p ul li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  font-size: 10px;
+  color: var(--p-chain);
+}
+
+/* Partner cards */
+.partner-grid-p {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px;
+  margin: 20px 0;
+}
+.pcard {
+  background: #fff;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 20px 18px;
+  border-left: 4px solid var(--p-chain);
+}
+.pcard h4 { font-weight: 700; font-size: 15px; color: var(--text); margin-bottom: 4px; }
+.pcard .prole { font-size: 12px; color: var(--text-light); margin-bottom: 10px; }
+.pcard .pitem {
+  font-size: 12.5px;
+  color: var(--text);
+  padding: 4px 0 4px 14px;
+  position: relative;
+  border-top: 1px solid #f5f5f5;
+}
+.pcard .pitem:first-of-type { border-top: none; }
+.pcard .pitem::before { content: '→'; position: absolute; left: 0; color: var(--p-chain); }
+
+/* Collab flow visual */
+.collab-visual {
+  display: flex;
+  align-items: stretch;
+  background: #fff;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  margin: 20px 0;
+}
+.cv-stage {
+  flex: 1;
+  padding: 24px 18px;
+  color: #fff;
+}
+.cv-stage h3 { font-size: 14px; font-weight: 700; margin-bottom: 12px; text-align: center; }
+.cv-stage ul { list-style: none; }
+.cv-stage ul li { font-size: 12px; opacity: 0.92; padding: 3px 0 3px 12px; position: relative; }
+.cv-stage ul li::before { content: '·'; position: absolute; left: 0; font-size: 18px; line-height: 1; }
+.cv1 { background: #1565C0; }
+.cv2 { background: #7B1FA2; }
+.cv3 { background: #2E7D32; }
+.cv-arrow {
+  width: 36px;
+  background: #f0f0f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  color: #bbb;
+  flex-shrink: 0;
+}
+
+/* Outcome tiles */
+.outcome-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 14px;
+  margin: 20px 0;
+}
+.outcome-tile {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: var(--shadow);
+  padding: 18px 16px;
+  border-top: 3px solid;
+  text-align: center;
+}
+.outcome-tile .ot-icon { font-size: 28px; margin-bottom: 8px; }
+.outcome-tile .ot-num { font-size: 28px; font-weight: 800; line-height: 1; margin-bottom: 4px; }
+.outcome-tile .ot-label { font-size: 12px; color: var(--text-light); line-height: 1.4; }
+
+@media (max-width: 768px) {
+  .three-steps { grid-template-columns: 1fr; }
+  .collab-visual { flex-direction: column; }
+  .cv-arrow { width: 100%; height: 30px; }
+  .fig-pair { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-brand" href="index.html">
+    <span class="logo">🏫</span>
+    三链合一·大数据专业建设成果
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html">首页</a></li>
+    <li><a href="knowledge-chain.html">📚 知识链</a></li>
+    <li><a href="extension-chain.html">🔬 拓展链</a></li>
+    <li><a href="practice-chain.html" class="nav-p">🏭 实践链</a></li>
+  </ul>
+</nav>
+
+<div class="hero p-hero">
+  <div class="hero-badge">P-CHAIN · 关系重构</div>
+  <h1>🏭 打通"实践链"</h1>
+  <p class="subtitle">联合科技矿场，产学协同育人，整合教学、培训、科研和产业实践资源，强化实践教育</p>
+  <p class="hero-meta">四、关系重构：联合科技矿场，打通"实践链"</p>
+</div>
+
+<main>
+
+  <!-- Overview -->
+  <div class="content-card" style="margin-top:40px; border-left:4px solid var(--p-chain);">
+    <p>大数据管理与应用专业核心在于"应用"和"管理"，实践性是其显著特征，必须强化实践教育在人才培养中的地位和作用。综合全面的大数据应用技能培养需要通过系统的实践教学环节来保证。</p>
+    <p>与产业企业生态对接，整合教学、培训、科研和产业实践资源，共建实训基地、大数据人才培养基地等，协助院校解决人才出口问题。为提高"强实践"的教学效果，我们已于2021年与华育兴业合作，建立了大数据课程实训平台，后又与东方国信、拓尔思等达成合作意向，共同申请了教育部供需对接就业育人项目<strong>"大数据管理与应用专业就业育人平台搭建与实践项目"</strong>。</p>
+  </div>
+
+  <!-- Section 1: Collaboration Model -->
+  <div class="section-header" style="margin-top:40px;">
+    <div class="section-num p">1</div>
+    <div>
+      <div class="section-title">产学协同育人培养模式</div>
+      <div class="section-sub">强调产学结合，产学互惠 · 三个核心环节</div>
+    </div>
+  </div>
+
+  <div class="content-card">
+    <p>产学协同育人培养模式强调产学结合，产学互惠。将产学协同育人培养模式分为<strong>建立校企协同机制、联合制订人才培养方案</strong>以及<strong>校企联合评定评价机制</strong>三个环节。</p>
+  </div>
+
+  <!-- Collaboration Flow Visual -->
+  <div class="collab-visual">
+    <div class="cv-stage cv1">
+      <h3>① 校企协同机制</h3>
+      <ul>
+        <li>校企共建大数据应用创新平台</li>
+        <li>教师进入企业研修</li>
+        <li>企业专家进入学校授课</li>
+        <li>本科生校企双导师制</li>
+        <li>实习和毕业设计相结合</li>
+        <li>以学分制为基础的认知实习课程</li>
+      </ul>
+    </div>
+    <div class="cv-arrow">→</div>
+    <div class="cv-stage cv2">
+      <h3>② 联合制订培养方案</h3>
+      <ul>
+        <li>针对需求动态调整</li>
+        <li>联合培养中周期性更新</li>
+        <li>符合产业发展及人才需求</li>
+        <li>AnyLogic虚拟仿真软件</li>
+        <li>八爪鱼数据采集器</li>
+        <li>Canvas数据挖掘平台</li>
+      </ul>
+    </div>
+    <div class="cv-arrow">→</div>
+    <div class="cv-stage cv3">
+      <h3>③ 校企联合评价机制</h3>
+      <ul>
+        <li>学生职业能力及专业素质评价</li>
+        <li>实习课程成绩共同表征</li>
+        <li>课程评价标准由双导师共同制定</li>
+        <li>培养期结束颁发认定证书</li>
+        <li>企业导师+课内导师联合评定</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Figure 14: 产学协同流程图 -->
+  <div class="fig-block">
+    <img src="images/fig_p12_1.jpeg" alt="图14 产学协同育人培养模式流程">
+    <div class="fig-caption"><strong>图14</strong> 产学协同育人培养模式流程（校企协同机制 → 联合制订培养方案 → 校企联合评定评价）</div>
+  </div>
+
+  <div class="sec-divider"></div>
+
+  <!-- Section 2: Three Steps Detail -->
+  <div class="section-header">
+    <div class="section-num p">2</div>
+    <div>
+      <div class="section-title">三个核心环节详解</div>
+      <div class="section-sub">从机制建立到方案制定，再到评价落地的完整闭环</div>
+    </div>
+  </div>
+
+  <div class="three-steps">
+    <div class="step-card-p">
+      <div class="step-badge-p">1</div>
+      <h3>建立校企协同机制</h3>
+      <ul>
+        <li>在"校企生"三方需求达成共识</li>
+        <li>2021年与华育兴业建立实训平台</li>
+        <li>2021年7月邀请企业专家到校培训</li>
+        <li>2024年1月参加拓尔思师资培训班</li>
+        <li>与拓尔思达成助课合作协议</li>
+        <li>2024年6月邀请吴琳琳老师到校讲授</li>
+      </ul>
+    </div>
+    <div class="step-card-p">
+      <div class="step-badge-p">2</div>
+      <h3>联合制订培养方案</h3>
+      <ul>
+        <li>以需求动态调整为关键</li>
+        <li>购买AnyLogic虚拟仿真软件</li>
+        <li>用于《系统建模与仿真》课程</li>
+        <li>购买八爪鱼数据采集器</li>
+        <li>用于《数据采集与清洗》课程</li>
+        <li>设计融入正式培养方案</li>
+      </ul>
+    </div>
+    <div class="step-card-p">
+      <div class="step-badge-p">3</div>
+      <h3>校企联合评定评价</h3>
+      <ul>
+        <li>职业能力与专业素质双维度评价</li>
+        <li>理论课程与实习课程成绩共同表征</li>
+        <li>课内导师与企业导师共同制定标准</li>
+        <li>培养期结束颁发认定证书</li>
+        <li>形成完整的人才培养闭环</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="sec-divider"></div>
+
+  <!-- Section 3: Partners -->
+  <div class="section-header">
+    <div class="section-num p">3</div>
+    <div>
+      <div class="section-title">合作企业与机构</div>
+      <div class="section-sub">多元产学合作生态 · 共建人才培养基地</div>
+    </div>
+  </div>
+
+  <div class="partner-grid-p">
+    <div class="pcard">
+      <h4>北京华育兴业科技有限公司</h4>
+      <div class="prole">甲骨文大数据（中国区）唯一运营商</div>
+      <div class="pitem">2021年建立大数据课程实训平台</div>
+      <div class="pitem">部署硬件平台+3个软件平台</div>
+      <div class="pitem">2021年7月举办教师培训活动</div>
+    </div>
+    <div class="pcard">
+      <h4>东方国信</h4>
+      <div class="prole">数据科学与大数据认证培训</div>
+      <div class="pitem">达成就业育人项目合作意向</div>
+      <div class="pitem">大数据考试认证培训中心合作</div>
+      <div class="pitem">共同申请教育部供需对接就业育人项目</div>
+    </div>
+    <div class="pcard">
+      <h4>拓尔思（TRS）</h4>
+      <div class="prole">全国高校数据科学与大模型师资培训</div>
+      <div class="pitem">2024年1月组织多位老师参加师资培训班</div>
+      <div class="pitem">达成助课合作协议</div>
+      <div class="pitem">2024年6月利用Canvas平台讲授在线大数据分析</div>
+    </div>
+    <div class="pcard">
+      <h4>北京格瑞纳电子产品有限公司</h4>
+      <div class="prole">虚拟仿真软件合作</div>
+      <div class="pitem">购买AnyLogic虚拟仿真软件</div>
+      <div class="pitem">应用于《系统建模与仿真》课程</div>
+    </div>
+    <div class="pcard">
+      <h4>深圳金英教育科技有限公司</h4>
+      <div class="prole">数据采集工具合作</div>
+      <div class="pitem">购买八爪鱼数据采集器</div>
+      <div class="pitem">应用于《数据采集与清洗》课程</div>
+    </div>
+    <div class="pcard">
+      <h4>广州就学在线科技有限公司（CDA）</h4>
+      <div class="prole">技能认证合作</div>
+      <div class="pitem">2023年12月达成合作协议</div>
+      <div class="pitem">共同申报教育部产学合作协同育人项目</div>
+      <div class="pitem">CDA数据分析师认证培训指导</div>
+    </div>
+  </div>
+
+  <div class="sec-divider"></div>
+
+  <!-- Section 4: Practice Cases -->
+  <div class="section-header">
+    <div class="section-num p">4</div>
+    <div>
+      <div class="section-title">实践教学资源与工具</div>
+      <div class="section-sub">专业软件+真实数据+虚拟仿真 · 夯实实践教学基础</div>
+    </div>
+  </div>
+
+  <!-- Figure 15 & 16 -->
+  <div class="fig-pair">
+    <div class="fig-block">
+      <img src="images/fig_p13_1.jpeg" alt="图15 AnyLogic虚拟仿真软件">
+      <div class="fig-caption"><strong>图15</strong> 购买AnyLogic虚拟仿真软件，用于《系统建模与仿真》课程（"源网荷储"一体化设计综合能源系统仿真界面）</div>
+    </div>
+    <div class="fig-block">
+      <img src="images/fig_p13_2.jpeg" alt="图16 八爪鱼数据采集器">
+      <div class="fig-caption"><strong>图16</strong> 购买八爪鱼数据采集器，用于《数据采集与清洗》课程（支持微博、京东、百度等主流平台数据采集）</div>
+    </div>
+  </div>
+
+  <div class="sec-divider"></div>
+
+  <!-- Section 5: Achievements -->
+  <div class="section-header">
+    <div class="section-num p">5</div>
+    <div>
+      <div class="section-title">主要成果总结</div>
+      <div class="section-sub">近五年教改项目成果 · 代表性教学论文 · 张永亮老师获奖情况</div>
+    </div>
+  </div>
+
+  <div class="content-card">
+    <p>"新文科"是建设高等教育强国的一种创新性探索。自专业重组以来，所有老师围绕大数据专业建设，产出了诸多成果。</p>
+    <ul>
+      <li>近五年承担<strong>教改项目共13项</strong>，省部级4项，围绕大数据专业建设形成5篇</li>
+      <li><strong>"课程思政"示范课</strong>建设项目5个，其中《宏观经济学》获校级课程思政示范课三等奖</li>
+      <li>校级优秀本科全程导师奖6项，院级优秀本科全程导师奖12项</li>
+      <li>教学质量奖5项，北京市优秀毕业（论文）导师奖1项</li>
+    </ul>
+  </div>
+
+  <!-- Outcome tiles -->
+  <div class="outcome-grid">
+    <div class="outcome-tile" style="border-color:#F57F17;">
+      <div class="ot-icon">📋</div>
+      <div class="ot-num" style="color:#F57F17;">13</div>
+      <div class="ot-label">教改项目<br>（4项省部级）</div>
+    </div>
+    <div class="outcome-tile" style="border-color:var(--p-chain);">
+      <div class="ot-icon">🏫</div>
+      <div class="ot-num" style="color:var(--p-chain);">5</div>
+      <div class="ot-label">课程思政<br>示范课建设项目</div>
+    </div>
+    <div class="outcome-tile" style="border-color:var(--e-chain);">
+      <div class="ot-icon">🎖️</div>
+      <div class="ot-num" style="color:var(--e-chain);">6</div>
+      <div class="ot-label">校级优秀本科<br>全程导师奖</div>
+    </div>
+    <div class="outcome-tile" style="border-color:var(--k-chain);">
+      <div class="ot-icon">⭐</div>
+      <div class="ot-num" style="color:var(--k-chain);">5</div>
+      <div class="ot-label">教学质量奖</div>
+    </div>
+    <div class="outcome-tile" style="border-color:var(--primary);">
+      <div class="ot-icon">🥇</div>
+      <div class="ot-num" style="color:var(--primary);">1</div>
+      <div class="ot-label">北京市优秀毕业<br>（论文）导师奖</div>
+    </div>
+
+  <!-- Figure 17: 近五年代表性教改项目成果 -->
+  <div class="fig-block" style="margin-top: 24px;">
+    <img src="images/fig_p14_1.jpeg" alt="图17 近五年代表性教改项目成果">
+    <div class="fig-caption"><strong>图17</strong> 近五年代表性教改项目成果（共13项，含4项省部级）</div>
+  </div>
+
+  <!-- Figure 18: 代表性教学论文成果 -->
+  <div class="fig-block" style="margin-top: 24px;">
+    <img src="images/fig_p14_2.jpeg" alt="图18 代表性教学论文成果">
+    <div class="fig-caption"><strong>图18</strong> 代表性教学论文成果</div>
+  </div>
+  <!-- Zhang Yongliang achievements -->
+  <div class="content-card" style="border-left:4px solid var(--primary); margin-top: 20px;">
+    <h3 style="color:var(--primary);">张永亮老师代表性荣誉</h3>
+    <ul>
+      <li>全国优秀科研成果评选活动优秀论文<strong>一等奖</strong>（国家级，中国教育科学研究院、中国教育学会颁发）</li>
+      <li>高等学校人文社会科学优秀成果<strong>二等奖</strong>（省部级，山东省教育厅颁发）</li>
+      <li>龙软科技教师贡献奖-<strong>优秀青年教师奖</strong>（全校5人）</li>
+      <li>校级优秀教学质量奖-<strong>青年教师教学优秀奖</strong></li>
+      <li>校级教学创新大赛-<strong>教学创新奖</strong>（两次）</li>
+      <li>管理学院教学基本功大赛<strong>一等奖</strong>（1次）和<strong>二等奖</strong>（1次）</li>
+      <li>2023年度校级<strong>优秀共产党员</strong></li>
+      <li>第四届全校教师教学创新大赛（副高组）<strong>二等奖</strong></li>
+      <li>决策科学与大数据研究院<strong>成员聘书</strong>（聘期五年）</li>
+    </ul>
+  </div>
+
+  <!-- Navigation -->
+  <div style="display:flex; justify-content:space-between; margin-top: 40px;">
+    <a href="extension-chain.html" style="text-decoration:none; padding:12px 24px; background:var(--e-chain); border-radius:8px; font-weight:600; color:#fff;">← 返回拓展链</a>
+    <a href="index.html" style="text-decoration:none; padding:12px 24px; background:var(--primary); border-radius:8px; font-weight:600; color:#fff;">返回首页 →</a>
+  </div>
+
+</main>
+
+<footer>
+  <strong>三链合一，立体重构</strong> · 实践链 P-Chain<br>
+  国家战略新兴学科大数据专业的交叉融合型课程体系与OBE培养模式的创新实践<br>
+  中国矿业大学（北京）管理学院 · 2024年4月
+</footer>
+
+</body>
+</html>
